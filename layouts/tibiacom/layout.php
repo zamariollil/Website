@@ -1,6 +1,57 @@
 <?php
 if(!defined('INITIALIZED'))
     exit;
+
+// Ensure all required variables are defined with fallback values for Locaweb hosting compatibility
+if(!isset($layout_name)) {
+    $layout_name = './layouts/tibiacom';
+}
+if(!isset($config)) {
+    $config = array(
+        'server' => array('serverName' => 'OT Server', 'url' => ''),
+        'base_url' => '',
+        'social' => array('fbappid' => '', 'twitter' => '', 'twittercreator' => ''),
+        'site' => array('darkborder' => '#5A2800'),
+        'status' => array('serverStatus_online' => 1)
+    );
+}
+if(!isset($css_version)) {
+    $css_version = '';
+}
+if(!isset($logged)) {
+    $logged = false;
+}
+if(!isset($highscores_list)) {
+    $highscores_list = array();
+}
+if(!isset($vocations_list)) {
+    $vocations_list = array();
+}
+if(!isset($towns_list)) {
+    $towns_list = array();
+}
+if(!isset($subtopic)) {
+    $subtopic = isset($_REQUEST['subtopic']) ? $_REQUEST['subtopic'] : 'latestnews';
+}
+if(!isset($group_id_of_acc_logged)) {
+    $group_id_of_acc_logged = 0;
+}
+if(!isset($main_content)) {
+    $main_content = '';
+}
+if(!isset($SQL)) {
+    // Fallback for $SQL if not set - will need actual database connection in production
+    $SQL = null;
+}
+if(!isset($twitch_a)) {
+    $twitch_a = 0;
+}
+if(!isset($twitch_c)) {
+    $twitch_c = 0;
+}
+if(!isset($players_online)) {
+    $players_online = 'Server Online';
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -9,25 +60,36 @@ if(!defined('INITIALIZED'))
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta http-equiv="content-language" content="pt-br">
     <?php $p = new Player();?>
-    <?php if($_REQUEST['subtopic'] == "accountmanagement" && $_REQUEST['action'] == "buychar"){ $p->loadById($_REQUEST['id']); $ch = (isset($_REQUEST['id']) ? $p->getName() : null);}?>
-    <?php if($_REQUEST['subtopic'] == "characters"){$ch = (isset($_REQUEST['name']) ? $_REQUEST['name'] : null);}?>
-    <?php if($_REQUEST['subtopic'] == "guilds"){$ch = (isset($_REQUEST['GuildName']) ? $_REQUEST['GuildName'] : null);}?>
-    <?php if($_REQUEST['subtopic'] == "worlds"){$ch = (isset($_REQUEST['world']) ? $_REQUEST['world'] : null);}?>
-    <?php if($_REQUEST['subtopic'] == "highscores"){$ch = (isset($_REQUEST['list']) ? $highscores_list[$_REQUEST['list']]." - ".$vocations_list[$_REQUEST['profession']].($_REQUEST['profession']>0?($_REQUEST['profession']<10?"s":null):null) : "Experience Points - ALL");}?>
-    <?php if($_REQUEST['subtopic'] == "houses"){$ch = (isset($_REQUEST['town']) ? $towns_list[$_REQUEST['town']] : (isset($_REQUEST['show']) ? $_REQUEST['show'] : null));}?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "accountmanagement" && isset($_REQUEST['action']) && $_REQUEST['action'] == "buychar"){ if(isset($_REQUEST['id'])){ $p->loadById($_REQUEST['id']); $ch = $p->getName(); } }?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters"){$ch = (isset($_REQUEST['name']) ? $_REQUEST['name'] : null);}?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "guilds"){$ch = (isset($_REQUEST['GuildName']) ? $_REQUEST['GuildName'] : null);}?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "worlds"){$ch = (isset($_REQUEST['world']) ? $_REQUEST['world'] : null);}?>
+    <?php 
+    if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "highscores"){
+        if(isset($_REQUEST['list']) && isset($highscores_list[$_REQUEST['list']]) && isset($_REQUEST['profession']) && isset($vocations_list[$_REQUEST['profession']])) {
+            $ch = $highscores_list[$_REQUEST['list']]." - ".$vocations_list[$_REQUEST['profession']];
+            if(isset($_REQUEST['profession']) && $_REQUEST['profession']>0 && $_REQUEST['profession']<10) {
+                $ch .= "s";
+            }
+        } else {
+            $ch = "Experience Points - ALL";
+        }
+    }
+    ?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "houses"){$ch = (isset($_REQUEST['town']) && isset($towns_list[$_REQUEST['town']]) ? $towns_list[$_REQUEST['town']] : (isset($_REQUEST['show']) ? $_REQUEST['show'] : null));}?>
     <title><?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?> - Free Multiplayer Online Role Playing Game</title>
     <meta name="author" content="Ricardo Souza - Codenome">
     <meta name="keywords" content="free online game, free multiplayer game, free online rpg, free mmorpg, mmorpg, mmog,
     online role playing game, online multiplayer game, internet game, online rpg, rpg">
     <!-- META TAGS OPENGRAPH-->
-    <meta property="og:title" content="<?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst($_REQUEST['action'] = strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?>"/>
+    <meta property="og:title" content="<?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?>"/>
     <meta property="og:url" content="<?=strtolower($config['base_url'].strip_tags(htmlspecialchars(trim($_SERVER['REQUEST_URI']))));?>"/>
-    <meta property="og:type" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo 'profile';}else{echo 'website';}?>"/>
+    <meta property="og:type" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo 'profile';}else{echo 'website';}?>"/>
     <meta property="og:description" content="A server made from fan to fan."/>
-    <meta property="og:image" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo strtolower($config['base_url']."player_portrait.php?name=".strip_tags(htmlspecialchars(trim(urlencode($_REQUEST['name'])))));}else{echo strtolower($config['base_url']."layouts/tibiacom/images/global/header/background-artwork.jpg");}?>"/>
-    <meta property="og:image:alt" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo "Player -> ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['name']))));}else{echo "background tibiano";}?>"/>
-    <meta property="og:image:width" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '498';}else{echo '1600';}?>"/>
-    <meta property="og:image:height" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '500';}else{echo '800';}?>"/>
+    <meta property="og:image" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo strtolower($config['base_url']."player_portrait.php?name=".strip_tags(htmlspecialchars(trim(urlencode($_REQUEST['name'])))));}else{echo strtolower($config['base_url']."layouts/tibiacom/images/global/header/background-artwork.jpg");}?>"/>
+    <meta property="og:image:alt" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo "Player -> ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['name']))));}else{echo "background tibiano";}?>"/>
+    <meta property="og:image:width" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '498';}else{echo '1600';}?>"/>
+    <meta property="og:image:height" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '500';}else{echo '800';}?>"/>
     <meta property="og:locale" content="pt_BR"/>
     <!-- ##FIM META TAGS OPENGRAPH-->
     
@@ -74,10 +136,10 @@ if(!defined('INITIALIZED'))
     <link href="<?php echo $layout_name; ?>/css/iziModal.min.css<?php echo $css_version;?>" rel="stylesheet" type="text/css">
     <link href="<?php echo $layout_name; ?>/css/Toast.min.css<?php echo $css_version;?>" rel="stylesheet" type="text/css">	
     <?php
-    if($_REQUEST['subtopic'] == "latestnews" || $_REQUEST['subtopic'] == "newsarchive")
+    if(isset($_REQUEST['subtopic']) && ($_REQUEST['subtopic'] == "latestnews" || $_REQUEST['subtopic'] == "newsarchive"))
 //        echo '<link href="'.$layout_name.'/css/news.min.css'.$css_version.'" rel="stylesheet" type="text/css">';
     ?>
-    <?php $subtopic = $_REQUEST['subtopic'];?>
+    <?php $subtopic = isset($_REQUEST['subtopic']) ? $_REQUEST['subtopic'] : 'latestnews';?>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -104,7 +166,7 @@ if(!defined('INITIALIZED'))
             </script>
         ';
 
-    if($_REQUEST['subtopic'] == "createaccount") echo '<script src="'.$layout_name.'/js/create_character.js'.$css_version.'"></script>';
+    if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "createaccount") echo '<script src="'.$layout_name.'/js/create_character.js'.$css_version.'"></script>';
     ?>
     <script>
         iziToast.settings({
@@ -124,11 +186,11 @@ if(!defined('INITIALIZED'))
     <script>
         var loginStatus=0;
         loginStatus='<?php if($logged){ ?>true<?php } else { ?>false<?php } ?>';
-        <?php if ($_REQUEST['subtopic'] == 'accountmanagement' && $_REQUEST['action'] == 'donate'){?>
+        <?php if (isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'accountmanagement' && isset($_REQUEST['action']) && $_REQUEST['action'] == 'donate'){?>
         var activeSubmenuItem='donate';
-        <?php }elseif($_REQUEST['subtopic'] == "accountmanagement" && $_REQUEST['action'] == 'buychar'){?>
+        <?php }elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "accountmanagement" && isset($_REQUEST['action']) && $_REQUEST['action'] == 'buychar'){?>
         var activeSubmenuItem='buychar';
-        <?php }elseif($_REQUEST['subtopic'] == "accountmanagement" && $_REQUEST['action'] == 'sellchar'){?>
+        <?php }elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "accountmanagement" && isset($_REQUEST['action']) && $_REQUEST['action'] == 'sellchar'){?>
         var activeSubmenuItem='sellchar';
         <?php }else{?>
         var activeSubmenuItem='<?php echo $subtopic; ?>';
@@ -150,7 +212,7 @@ if(!defined('INITIALIZED'))
     <script src="<?php echo $layout_name; ?>/js/generic.js<?php echo $css_version;?>"></script>
     <script src="<?php echo $layout_name; ?>/js/initialize.js<?php echo $css_version;?>"></script>
     <!--<script src="<?php echo $layout_name; ?>/js/swfobject.js<?php echo $css_version;?>" ></script>-->
-    <?php if($_REQUEST['subtopic'] == "accountmanagement") { ?>
+    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "accountmanagement") { ?>
         <script type="text/javascript">
             function openGameWindow(a_URL)
             {
@@ -185,7 +247,7 @@ if(!defined('INITIALIZED'))
       data-twttr-rendered="true">
 <div class="se-pre-con"></div>
 <?php if(Website::getWebsiteConfig()->getValue('ouibounce_isActive')){?>
-    <?php if($_REQUEST['subtopic'] != "accountmanagement" && $_REQUEST['action'] != "donate"){?>
+    <?php if((!isset($_REQUEST['subtopic']) || $_REQUEST['subtopic'] != "accountmanagement") && (!isset($_REQUEST['action']) || $_REQUEST['action'] != "donate")){?>
     <script>
         var modal = document.getElementById('ouibounce-modal');
         var bounce = ouibounce($("#ouibounce-modal")[0],
@@ -764,7 +826,7 @@ if(!defined('INITIALIZED'))
                                             <div class="RightChain" style="background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);"></div>
                                         </div>
                                     </a>
-                                <?php if($_REQUEST["subtopic"] == "erro"){?>
+                                <?php if(isset($_REQUEST["subtopic"]) && $_REQUEST["subtopic"] == "erro"){?>
                                     <a href="?subtopic=erro">
                                         <div id="submenu_erro" data-menu="support" class="Submenuitem" onmouseover="MouseOverSubmenuItem(this)" onmouseout="MouseOutSubmenuItem(this)">
                                             <div class="LeftChain" style="background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);"></div>
@@ -837,7 +899,7 @@ if(!defined('INITIALIZED'))
                                             <div class="RightChain" style="background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);"></div>
                                         </div>
                                     </a> -->
-                                    <?php if($_REQUEST['subtopic'] == 'tankyou'){?>
+                                    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'tankyou'){?>
                                         <a>
                                             <div id="submenu_tankyou" data-menu="shop" class="Submenuitem" onmouseover="MouseOverSubmenuItem(this)" onmouseout="MouseOutSubmenuItem(this)">
                                                 <div class="LeftChain" style="background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);"></div>
@@ -885,7 +947,7 @@ if(!defined('INITIALIZED'))
                                     
                                     $infobar = Website::getWebsiteConfig()->getValue('info_bar_active');
         
-                                    if($_SESSION['server_status'] == 1){
+                                    if($_SESSION['server_status'] == 1 && $SQL !== null){
                                         $qtd_players_online = $SQL->query("SELECT count(*) as total from `players_online`")->fetch();
                                         if($qtd_players_online["total"] == "1"){
                                             $players_online = ($infobar ? $qtd_players_online["total"].' Player Online' : $qtd_players_online["total"].'<br/>Player Online');
@@ -928,7 +990,7 @@ if(!defined('INITIALIZED'))
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_twitch')){?>
                                                 <a class="InfoBarBlock" href="https://www.twitch.tv/directory/game/Tibia" target="_blank">
                                                     <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-twitch.png">
-                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>><img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-streamers.png">
+                                                    <span class="InfoBarNumbers" <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'characters' && isset($_REQUEST['name'])){ echo "style='top:0'"; }?>><img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-streamers.png">
                                                         <span class="InfoBarSmallElement"><?= $twitch_a?></span><img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-viewers.png">
                                                         <span class="InfoBarSmallElement"><?= $twitch_c?></span>
                                                     </span>
@@ -937,7 +999,7 @@ if(!defined('INITIALIZED'))
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_youtube')){?>
                                                 <a class="InfoBarBlock" href="https://gaming.youtube.com/game/UCccW6i67_MlXxwqBMh0emYA" target="_blank">
                                                     <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-youtube.png">
-                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
+                                                    <span class="InfoBarNumbers" <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'characters' && isset($_REQUEST['name'])){ echo "style='top:0'"; }?>>
                                                         <img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-streamers.png">
                                                         <span class="InfoBarSmallElement">17</span>
                                                         <img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-viewers.png">
@@ -948,7 +1010,7 @@ if(!defined('INITIALIZED'))
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_forum')){?>
                                                 <a href="?subtopic=downloadclient">
                                                     <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-download.png">
-                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
+                                                    <span class="InfoBarNumbers" <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'characters' && isset($_REQUEST['name'])){ echo "style='top:0'"; }?>>
                                                         <span class="InfoBarSmallElement">Downloads</span>
                                                     </span>
                                                 </a>
@@ -956,7 +1018,7 @@ if(!defined('INITIALIZED'))
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_online')){?>
                                                 <a style="float: right" href="<?php echo $config['base_url']?>?subtopic=worlds">
                                                     <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-players-online.png">
-                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
+                                                    <span class="InfoBarNumbers" <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == 'characters' && isset($_REQUEST['name'])){ echo "style='top:0'"; }?>>
                                                         <span class="InfoBarSmallElement show_online_data"><?php echo $players_online; ?></span>
                                                     </span>
                                                 </a>
@@ -980,23 +1042,23 @@ if(!defined('INITIALIZED'))
                                         <div class="Border_1" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/border-1.gif);"></div>
                                         <div class="BorderTitleText" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/title-background-green.gif);"></div>
                                         <?php
-                                        $headline = ucfirst($_REQUEST['subtopic']);
-                                        if($_REQUEST['subtopic'] == "latestnews")
+                                        $headline = isset($_REQUEST['subtopic']) ? ucfirst($_REQUEST['subtopic']) : 'News';
+                                        if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "latestnews")
                                             $headline = "News";
-                                        elseif($_REQUEST['subtopic'] == "accountmanagement"){
+                                        elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "accountmanagement"){
                                             $headline = "Account Management";
-                                            if($_REQUEST['action'] == "buychar")
+                                            if(isset($_REQUEST['action']) && $_REQUEST['action'] == "buychar")
                                                 $headline = "Buy Char";
-                                            if($_REQUEST['action'] == "sellchar")
+                                            if(isset($_REQUEST['action']) && $_REQUEST['action'] == "sellchar")
                                                 $headline = "Sell Char";
                                         }
-                                        elseif($_REQUEST['subtopic'] == "createaccount")
+                                        elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "createaccount")
                                             $headline = "Create Account";
-                                        elseif($_REQUEST['subtopic'] == "whoisonline")
+                                        elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "whoisonline")
                                             $headline = "Who is Online";
-                                        elseif($_REQUEST['subtopic'] == "adminpanel")
+                                        elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "adminpanel")
                                             $headline = "Admin Panel";
-                                        elseif($_REQUEST['subtopic'] == "tankyou")
+                                        elseif(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "tankyou")
                                             $headline = "Thank You";
                                         ?>
                                         <img id="ContentBoxHeadline" class="Title" src="headline.php?text=<?PHP echo ucwords(str_replace('_', ' ', strtolower($headline))); ?>" alt="Contentbox headline">

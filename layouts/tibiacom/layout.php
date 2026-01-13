@@ -24,7 +24,7 @@ if(!defined('INITIALIZED'))
     <meta property="og:url" content="<?=strtolower($config['base_url'].strip_tags(htmlspecialchars(trim($_SERVER['REQUEST_URI']))));?>"/>
     <meta property="og:type" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo 'profile';}else{echo 'website';}?>"/>
     <meta property="og:description" content="A server made from fan to fan."/>
-    <meta property="og:image" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo strtolower($config['base_url']."player_portrait.php?name=".strip_tags(htmlspecialchars(trim(urlencode($_REQUEST['name'])))));}else{echo strtolower($config['base_url']."layouts/tibiacom/images/global/header/background-artwork.jpg");}?>"/>
+    <meta property="og:image" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo strtolower($config['base_url']."player_portrait.php?name=".strip_tags(htmlspecialchars(trim(urlencode($_REQUEST['name'])))));}else{echo strtolower($config['base_url'].$layout_name."/images/global/header/background-artwork.jpg");}?>"/>
     <meta property="og:image:alt" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo "Player -> ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['name']))));}else{echo "background tibiano";}?>"/>
     <meta property="og:image:width" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '498';}else{echo '1600';}?>"/>
     <meta property="og:image:height" content="<?php if($_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo '500';}else{echo '800';}?>"/>
@@ -115,7 +115,7 @@ if(!defined('INITIALIZED'))
             messageColor:'#5A2800',
             backgroundColor:'#D4C0A1',
             progressBarColor:'rgba(90,40,0,.8)',
-            // progressBarColor:'url(./layouts/tibiacom/images/global/content/table-headline-border.gif)',
+            // progressBarColor:'url(<?php echo $layout_name; ?>/images/global/content/table-headline-border.gif)',
             closeOnEscape: true,
             overlay:true,
             overlayClose: true,
@@ -412,10 +412,10 @@ if(!defined('INITIALIZED'))
 										<?php }?>
 							 <a href="?subtopic=tradeoff">
                     <div id="submenu_tradeoff" class="Submenuitem" onmouseover="MouseOverSubmenuItem(this)" onmouseout="MouseOutSubmenuItem(this)">
-                           <div class="LeftChain" style="background-image:url(<?PHP echo $layout_name; ?>/images/general/chain.gif);"></div>
-                         <div id="ActiveSubmenuItemIcon_tradeoff" class="ActiveSubmenuItemIcon" style="background-image:url(<?PHP echo $layout_name; ?>/images/menu/icon-activesubmenu.gif);"></div>
+                           <div class="LeftChain" style="background-image:url(<?PHP echo $layout_name; ?>/images/global/general/chain.gif);"></div>
+                         <div id="ActiveSubmenuItemIcon_tradeoff" class="ActiveSubmenuItemIcon" style="background-image:url(<?PHP echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);"></div>
                             <div id="ActiveSubmenuItemLabel_tradeoff" class="SubmenuitemLabel"><font style="color:white">Trade Off<img src="images/hot.gif"></div>
-                             <div class="RightChain" style="background-image:url(<?PHP echo $layout_name; ?>/images/general/chain.gif);"></div>
+                             <div class="RightChain" style="background-image:url(<?PHP echo $layout_name; ?>/images/global/general/chain.gif);"></div>
                                         </div>
                                   </a>
                                     <a href="?subtopic=worlds">
@@ -610,26 +610,26 @@ if(!defined('INITIALIZED'))
 
 <a href='?subtopic=reward'>
   <div id='submenu_reward' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_reward' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_reward' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>Reward System <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
 <a href='?subtopic=umbral'>
   <div id='submenu_umbral' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>Umbral System <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
 <a href='?subtopic=item_custom'>
   <div id='submenu_item_custom' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>Items Custom <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>	
 
@@ -679,10 +679,10 @@ if(!defined('INITIALIZED'))
                                 </a>
 							  <a href='?subtopic=citywar'>
   <div id='submenu_wars' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_wars' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_wars' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
 	<div id="ActiveSubmenuItemLabel_citywar" class="SubmenuitemLabel">War Entrosa</div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
                             </div>
@@ -707,26 +707,26 @@ if(!defined('INITIALIZED'))
                                 <div id="events_Submenu" class="Submenu">                             
 <a href='?subtopic=battlefield'>
   <div id='submenu_battlefield' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>Battlefield <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
 <a href='?subtopic=snowballwar'>
   <div id='submenu_snowballwar' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>Snowball War <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
 <a href='?subtopic=BomberMan'>
   <div id='submenu_BomberMan' class='Submenuitem' onMouseOver='MouseOverSubmenuItem(this)' onMouseOut='MouseOutSubmenuItem(this)'>
-    <div class='LeftChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
-    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/menu/icon-activesubmenu.gif);'></div>
+    <div class='LeftChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
+    <div id='ActiveSubmenuItemIcon_umbral' class='ActiveSubmenuItemIcon' style='background-image:url(<?php echo $layout_name; ?>/images/global/menu/icon-activesubmenu.gif);'></div>
     <div class='SubmenuitemLabel'>BomberMan <font color="yellow"> [new] </font></div>
-    <div class='RightChain' style='background-image:url(./LAYOUTSINAKSHUIQHOJEBHQWOPQJSJAKHIOSQ465/tibiarl/images/general/chain.gif);'></div>
+    <div class='RightChain' style='background-image:url(<?php echo $layout_name; ?>/images/global/general/chain.gif);'></div>
   </div>
 </a>
                                 </div>
@@ -899,10 +899,10 @@ if(!defined('INITIALIZED'))
                                     ?>
                                     <?php if(Website::getWebsiteConfig()->getValue('info_bar_active')){?>
                                     <div id="PlayersOnline" class="Box">
-                                        <div class="Corner-tl" style="background-image:url(layouts/tibiacom/images/global/content/corner-tl.gif);"></div>
-                                        <div class="Corner-tr" style="background-image:url(layouts/tibiacom/images/global/content/corner-tr.gif);"></div>
-                                        <div class="Border_1" style="background-image:url(layouts/tibiacom/images/global/content/border-1.gif);"></div>
-                                        <div class="BorderTitleText" style="background-image:url(layouts/tibiacom/images/global/content/title-background-blue.gif); height: 28px;">
+                                        <div class="Corner-tl" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/corner-tl.gif);"></div>
+                                        <div class="Corner-tr" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/corner-tr.gif);"></div>
+                                        <div class="Border_1" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/border-1.gif);"></div>
+                                        <div class="BorderTitleText" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/title-background-blue.gif); height: 28px;">
                                             <div class="InfoBar">
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_cast')){?>
                                                 
@@ -927,27 +927,27 @@ if(!defined('INITIALIZED'))
                                                 <?php }?>
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_twitch')){?>
                                                 <a class="InfoBarBlock" href="https://www.twitch.tv/directory/game/Tibia" target="_blank">
-                                                    <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-twitch.png">
-                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>><img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-streamers.png">
-                                                        <span class="InfoBarSmallElement"><?= $twitch_a?></span><img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-viewers.png">
+                                                    <img class="InfoBarBigLogo" src="<?php echo $layout_name; ?>/images/global/header/info/icon-twitch.png">
+                                                    <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>><img class="InfoBarSmallElement" src="<?php echo $layout_name; ?>/images/global/header/info/icon-streamers.png">
+                                                        <span class="InfoBarSmallElement"><?= $twitch_a?></span><img class="InfoBarSmallElement" src="<?php echo $layout_name; ?>/images/global/header/info/icon-viewers.png">
                                                         <span class="InfoBarSmallElement"><?= $twitch_c?></span>
                                                     </span>
                                                 </a>
                                                 <?php }?>
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_youtube')){?>
                                                 <a class="InfoBarBlock" href="https://gaming.youtube.com/game/UCccW6i67_MlXxwqBMh0emYA" target="_blank">
-                                                    <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-youtube.png">
+                                                    <img class="InfoBarBigLogo" src="<?php echo $layout_name; ?>/images/global/header/info/icon-youtube.png">
                                                     <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
-                                                        <img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-streamers.png">
+                                                        <img class="InfoBarSmallElement" src="<?php echo $layout_name; ?>/images/global/header/info/icon-streamers.png">
                                                         <span class="InfoBarSmallElement">17</span>
-                                                        <img class="InfoBarSmallElement" src="layouts/tibiacom/images/global/header/info/icon-viewers.png">
+                                                        <img class="InfoBarSmallElement" src="<?php echo $layout_name; ?>/images/global/header/info/icon-viewers.png">
                                                         <span class="InfoBarSmallElement">661</span>
                                                     </span>
                                                 </a>
                                                 <?php }?>
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_forum')){?>
                                                 <a href="?subtopic=downloadclient">
-                                                    <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-download.png">
+                                                    <img class="InfoBarBigLogo" src="<?php echo $layout_name; ?>/images/global/header/info/icon-download.png">
                                                     <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
                                                         <span class="InfoBarSmallElement">Downloads</span>
                                                     </span>
@@ -955,7 +955,7 @@ if(!defined('INITIALIZED'))
                                                 <?php }?>
                                                 <?php if(Website::getWebsiteConfig()->getValue('info_bar_online')){?>
                                                 <a style="float: right" href="<?php echo $config['base_url']?>?subtopic=worlds">
-                                                    <img class="InfoBarBigLogo" src="layouts/tibiacom/images/global/header/info/icon-players-online.png">
+                                                    <img class="InfoBarBigLogo" src="<?php echo $layout_name; ?>/images/global/header/info/icon-players-online.png">
                                                     <span class="InfoBarNumbers" <?php if($_REQUEST['subtopic'] == 'characters' && $_REQUEST['name']){ echo "style='top:0'"; }?>>
                                                         <span class="InfoBarSmallElement show_online_data"><?php echo $players_online; ?></span>
                                                     </span>
@@ -963,12 +963,12 @@ if(!defined('INITIALIZED'))
                                                 <?php }?>
                                             </div>
                                         </div>
-                                        <div class="Border_1" style="background-image:url(layouts/tibiacom/images/global/content/border-1.gif);"></div>
+                                        <div class="Border_1" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/border-1.gif);"></div>
                                         <div class="CornerWrapper-b">
-                                            <div class="Corner-bl" style="background-image:url(layouts/tibiacom/images/global/content/corner-bl.gif);"></div>
+                                            <div class="Corner-bl" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/corner-bl.gif);"></div>
                                         </div>
                                         <div class="CornerWrapper-b">
-                                            <div class="Corner-br" style="background-image:url(layouts/tibiacom/images/global/content/corner-br.gif);"></div>
+                                            <div class="Corner-br" style="background-image:url(<?php echo $layout_name; ?>/images/global/content/corner-br.gif);"></div>
                                         </div>
                                     </div>
                                     <?php }?>

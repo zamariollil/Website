@@ -344,22 +344,23 @@ function generateRandomString($length = 16, $onlyNumbers = true)
 
 function showError($message)
 {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	$message = '
 	<div class="SmallBox" style="margin-top:10px;">
 		<div class="MessageContainer" >
-			<div class="BoxFrameHorizontal" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-horizontal.gif);" /></div>
-			<div class="BoxFrameEdgeLeftTop" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif);" /></div>
-			<div class="BoxFrameEdgeRightTop" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif);" /></div>
+			<div class="BoxFrameHorizontal" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-horizontal.gif);" /></div>
+			<div class="BoxFrameEdgeLeftTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);" /></div>
+			<div class="BoxFrameEdgeRightTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);" /></div>
 			<div class="ErrorMessage" >
-				<div class="BoxFrameVerticalLeft" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-vertical.gif);" /></div>
-				<div class="BoxFrameVerticalRight" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-vertical.gif);" /></div>
-				<div class="AttentionSign" style="background-image:url(layouts/tibiacom/images/global/content/attentionsign.gif);" /></div>
+				<div class="BoxFrameVerticalLeft" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif);" /></div>
+				<div class="BoxFrameVerticalRight" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif);" /></div>
+				<div class="AttentionSign" style="background-image:url(' . $layout_path . '/images/global/content/attentionsign.gif);" /></div>
 				<b>Ocorreram os seguintes erros:</b><br/>
 				<li>' . $message . '
 			</div>
-			<div class="BoxFrameHorizontal" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-horizontal.gif);" /></div>
-			<div class="BoxFrameEdgeRightBottom" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif);" /></div>
-			<div class="BoxFrameEdgeLeftBottom" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif);" /></div>
+			<div class="BoxFrameHorizontal" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-horizontal.gif);" /></div>
+			<div class="BoxFrameEdgeRightBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);" /></div>
+			<div class="BoxFrameEdgeLeftBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);" /></div>
 		</div>
 	</div><br>';
 
@@ -368,20 +369,21 @@ function showError($message)
 
 function tibiaTable($title, $body)
 {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	$message = '
 	<div class="TableContainer">
 		<table class="Table1" cellpadding="0" cellspacing="0">
 			<div class="CaptionContainer">
 				<div class="CaptionInnerContainer">
-					<span class="CaptionEdgeLeftTop" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif)"></span>
-					<span class="CaptionEdgeRightTop" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif)"></span>
-					<span class="CaptionBorderTop" style="background-image:url(layouts/tibiacom/images/global/content/table-headline-border.gif)"></span>
-					<span class="CaptionVerticalLeft" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-vertical.gif)"></span>
+					<span class="CaptionEdgeLeftTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif)"></span>
+					<span class="CaptionEdgeRightTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif)"></span>
+					<span class="CaptionBorderTop" style="background-image:url(' . $layout_path . '/images/global/content/table-headline-border.gif)"></span>
+					<span class="CaptionVerticalLeft" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif)"></span>
 					<div class="Text">' . $title . '</div>
-					<span class="CaptionVerticalRight" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-vertical.gif)"></span>
-					<span class="CaptionBorderBottom" style="background-image:url(layouts/tibiacom/images/global/content/table-headline-border.gif)"></span>
-					<span class="CaptionEdgeLeftBottom" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif)"></span>
-					<span class="CaptionEdgeRightBottom" style="background-image:url(layouts/tibiacom/images/global/content/box-frame-edge.gif)"></span>
+					<span class="CaptionVerticalRight" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif)"></span>
+					<span class="CaptionBorderBottom" style="background-image:url(' . $layout_path . '/images/global/content/table-headline-border.gif)"></span>
+					<span class="CaptionEdgeLeftBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif)"></span>
+					<span class="CaptionEdgeRightBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif)"></span>
 				</div>
 			</div>
 			<tr>

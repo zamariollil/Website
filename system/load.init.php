@@ -36,23 +36,24 @@ $config['server'] = $tmp_lua_config->getConfig();
  * @return string
  */
 $make_content_header = function ($name, $sm_text = '') {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	if ($sm_text && $sm_text != '') {
 		$sm_text = '<div style="float: right"><small><span>' . $sm_text . '</small></span></div>';
 	}
 	$q = '
 <div class="CaptionContainer">
 	<div class="CaptionInnerContainer">
-		<span class="CaptionEdgeLeftTop" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-edge.gif);"></span>
-		<span class="CaptionEdgeRightTop" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-edge.gif);"></span>
-		<span class="CaptionBorderTop" style="background-image:url(./layouts/tibiacom/images/global/content/table-headline-border.gif);"></span>
-		<span class="CaptionBorderBottom" style="background-image:url(./layouts/tibiacom/images/global/content/table-headline-border.gif);"></span>
-		<span class="CaptionEdgeLeftBottom" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-edge.gif);"></span>
-		<span class="CaptionVerticalLeft" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-vertical.gif);"></span>
+		<span class="CaptionEdgeLeftTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionEdgeRightTop" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionBorderTop" style="background-image:url(' . $layout_path . '/images/global/content/table-headline-border.gif);"></span>
+		<span class="CaptionBorderBottom" style="background-image:url(' . $layout_path . '/images/global/content/table-headline-border.gif);"></span>
+		<span class="CaptionEdgeLeftBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionVerticalLeft" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif);"></span>
 		<div class="Text" style="min-height: 17px"><div style="float: left">' . $name . '</div> ' . $sm_text . '</div>
-		<span class="CaptionVerticalRight" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-vertical.gif);"></span>
-		<span class="CaptionBorderBottom" style="background-image:url(./layouts/tibiacom/images/global/content/table-headline-border.gif);"></span>
+		<span class="CaptionVerticalRight" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-vertical.gif);"></span>
+		<span class="CaptionBorderBottom" style="background-image:url(' . $layout_path . '/images/global/content/table-headline-border.gif);"></span>
 		<span class="CaptionEdgeLeftBottom"></span>
-		<span class="CaptionEdgeRightBottom" style="background-image:url(./layouts/tibiacom/images/global/content/box-frame-edge.gif);"></span>
+		<span class="CaptionEdgeRightBottom" style="background-image:url(' . $layout_path . '/images/global/content/box-frame-edge.gif);"></span>
 	</div>
 </div>
   ';
@@ -67,6 +68,7 @@ $make_content_header = function ($name, $sm_text = '') {
  * @return string
  */
 $make_table_header = function ($class = 'Table3', $align = '', $stripped = false) {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	$q = '
 <table class="' . $class . '" cellpadding="0" cellspacing="0" align="' . $align . '">
 	<tbody>
@@ -78,9 +80,9 @@ $make_table_header = function ($class = 'Table3', $align = '', $stripped = false
 							<tr>
 								<td>
 									<div class="TableShadowContainerRightTop">
-										<div class="TableShadowRightTop" style="background-image:url(./layouts/tibiacom/images/global/content/table-shadow-rt.gif);"></div>
+										<div class="TableShadowRightTop" style="background-image:url(' . $layout_path . '/images/global/content/table-shadow-rt.gif);"></div>
 									</div>
-									<div class="TableContentAndRightShadow" style="background-image:url(./layouts/tibiacom/images/global/content/table-shadow-rm.gif);">
+									<div class="TableContentAndRightShadow" style="background-image:url(' . $layout_path . '/images/global/content/table-shadow-rm.gif);">
 										<div class="TableContentContainer">
 											<table class="TableContent' . ($stripped ? ' TableStripped ' : ' ') . '" width="100%">
 												<tbody>';
@@ -92,15 +94,16 @@ $make_table_header = function ($class = 'Table3', $align = '', $stripped = false
  * @return string
  */
 $make_table_footer = function () {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	$q = '
 												</tbody>
 											</table>
 										</div>
 									</div>
 									<div class="TableShadowContainer">
-										<div class="TableBottomShadow" style="background-image:url(./layouts/tibiacom/images/global/content/table-shadow-bm.gif);">
-											<div class="TableBottomLeftShadow" style="background-image:url(./layouts/tibiacom/images/global/content/table-shadow-bl.gif);"></div>
-											<div class="TableBottomRightShadow" style="background-image:url(./layouts/tibiacom/images/global/content/table-shadow-br.gif);"></div>
+										<div class="TableBottomShadow" style="background-image:url(' . $layout_path . '/images/global/content/table-shadow-bm.gif);">
+											<div class="TableBottomLeftShadow" style="background-image:url(' . $layout_path . '/images/global/content/table-shadow-bl.gif);"></div>
+											<div class="TableBottomRightShadow" style="background-image:url(' . $layout_path . '/images/global/content/table-shadow-br.gif);"></div>
 										</div>
 									</div>
 								</td>
@@ -120,14 +123,15 @@ $make_table_footer = function () {
  * @return string
  */
 $make_double_archs = function ($title) {
+	$layout_path = './layouts/' . Website::getWebsiteConfig()->getValue('layout');
 	$html = '
 <div style="text-align: -webkit-center !important;">
 	<table>
 		<tbody>
 			<tr>
-				<td><img src="./layouts/tibiacom/images/global/content/headline-bracer-left.gif"></td>
+				<td><img src="' . $layout_path . '/images/global/content/headline-bracer-left.gif"></td>
 				<td style="text-align:center;vertical-align:middle;horizontal-align:center;font-size:17px;font-weight:bold;">' . $title . '</td>
-				<td><img src="./layouts/tibiacom/images/global/content/headline-bracer-right.gif"></td>
+				<td><img src="' . $layout_path . '/images/global/content/headline-bracer-right.gif"></td>
 			</tr>
 		</tbody>
 	</table>

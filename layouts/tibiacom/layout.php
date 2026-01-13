@@ -64,14 +64,25 @@ if(!isset($players_online)) {
     <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters"){$ch = (isset($_REQUEST['name']) ? $_REQUEST['name'] : null);}?>
     <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "guilds"){$ch = (isset($_REQUEST['GuildName']) ? $_REQUEST['GuildName'] : null);}?>
     <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "worlds"){$ch = (isset($_REQUEST['world']) ? $_REQUEST['world'] : null);}?>
-    <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "highscores"){$ch = (isset($_REQUEST['list']) && isset($highscores_list[$_REQUEST['list']]) && isset($_REQUEST['profession']) && isset($vocations_list[$_REQUEST['profession']]) ? $highscores_list[$_REQUEST['list']]." - ".$vocations_list[$_REQUEST['profession']].(isset($_REQUEST['profession']) && $_REQUEST['profession']>0?($_REQUEST['profession']<10?"s":null):null) : "Experience Points - ALL");}?>
+    <?php 
+    if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "highscores"){
+        if(isset($_REQUEST['list']) && isset($highscores_list[$_REQUEST['list']]) && isset($_REQUEST['profession']) && isset($vocations_list[$_REQUEST['profession']])) {
+            $ch = $highscores_list[$_REQUEST['list']]." - ".$vocations_list[$_REQUEST['profession']];
+            if(isset($_REQUEST['profession']) && $_REQUEST['profession']>0 && $_REQUEST['profession']<10) {
+                $ch .= "s";
+            }
+        } else {
+            $ch = "Experience Points - ALL";
+        }
+    }
+    ?>
     <?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "houses"){$ch = (isset($_REQUEST['town']) && isset($towns_list[$_REQUEST['town']]) ? $towns_list[$_REQUEST['town']] : (isset($_REQUEST['show']) ? $_REQUEST['show'] : null));}?>
     <title><?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?> - Free Multiplayer Online Role Playing Game</title>
     <meta name="author" content="Ricardo Souza - Codenome">
     <meta name="keywords" content="free online game, free multiplayer game, free online rpg, free mmorpg, mmorpg, mmog,
     online role playing game, online multiplayer game, internet game, online rpg, rpg">
     <!-- META TAGS OPENGRAPH-->
-    <meta property="og:title" content="<?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst($_REQUEST['action'] = strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?>"/>
+    <meta property="og:title" content="<?=$config['server']['serverName'].(isset($_REQUEST['subtopic'])? " - ".ucfirst($_REQUEST['subtopic']) :'').(isset($_REQUEST['action'])?" - ".ucfirst(strip_tags(htmlspecialchars(trim($_REQUEST['action'])))):"").(isset($ch)?" - ".ucfirst(strip_tags(htmlspecialchars(trim($ch)))):"")?>"/>
     <meta property="og:url" content="<?=strtolower($config['base_url'].strip_tags(htmlspecialchars(trim($_SERVER['REQUEST_URI']))));?>"/>
     <meta property="og:type" content="<?php if(isset($_REQUEST['subtopic']) && $_REQUEST['subtopic'] == "characters" && isset($_REQUEST['name'])){echo 'profile';}else{echo 'website';}?>"/>
     <meta property="og:description" content="A server made from fan to fan."/>

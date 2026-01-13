@@ -11,7 +11,8 @@ if(!isset($config)) {
         'server' => array('serverName' => 'OT Server', 'url' => ''),
         'base_url' => '',
         'social' => array('fbappid' => '', 'twitter' => '', 'twittercreator' => ''),
-        'site' => array('darkborder' => '#5A2800')
+        'site' => array('darkborder' => '#5A2800'),
+        'status' => array('serverStatus_online' => 1)
     );
 }
 if(!isset($css_version)) {
@@ -37,6 +38,19 @@ if(!isset($group_id_of_acc_logged)) {
 }
 if(!isset($main_content)) {
     $main_content = '';
+}
+if(!isset($SQL)) {
+    // Fallback for $SQL if not set - will need actual database connection in production
+    $SQL = null;
+}
+if(!isset($twitch_a)) {
+    $twitch_a = 0;
+}
+if(!isset($twitch_c)) {
+    $twitch_c = 0;
+}
+if(!isset($players_online)) {
+    $players_online = 'Server Online';
 }
 ?>
 <!DOCTYPE HTML>
@@ -922,7 +936,7 @@ if(!isset($main_content)) {
                                     
                                     $infobar = Website::getWebsiteConfig()->getValue('info_bar_active');
         
-                                    if($_SESSION['server_status'] == 1){
+                                    if($_SESSION['server_status'] == 1 && $SQL !== null){
                                         $qtd_players_online = $SQL->query("SELECT count(*) as total from `players_online`")->fetch();
                                         if($qtd_players_online["total"] == "1"){
                                             $players_online = ($infobar ? $qtd_players_online["total"].' Player Online' : $qtd_players_online["total"].'<br/>Player Online');
